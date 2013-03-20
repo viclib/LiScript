@@ -62,7 +62,8 @@ Output: 4
 ```
 (def i 0)
 (while (less i 4) 
-	(console.log i))
+	(console.log i)
+	(def i (sum i 1)))
 Output: 0 1 2 3
 ```
 
