@@ -107,7 +107,7 @@ That is much simpler than traditional reader macros! For more advanced cases you
 Well, that's it! This is the whole language. Again, the out-of-the-box package must be temperated with macros. For example, you could certainly improve the loops - a "for" macro could work as CoffeeScript's array comprehension. A "let" macro might prove handy, and a facility to concatenate arrays would make defining new macros easier. The point is: LiScript allows you to do whatever you want; you control the language!
 
 #### Next steps: 
-LiScript is just a first step towards a goal: increasing programmer productivity to new levels. There is still needs some work, but when it's stable, it'll not ever need to be updated (which also makes it very future proof). After this, efforts will be done towards the concretization of:
+LiScript is just a first step towards a goal: increasing programmer productivity to new levels. There is still needs some work - for example, "var x=3" is not an expression in JavaScript. Because of this, all variables are defined on the global scope. I'm thinking in a solution for this. Anyway, the idea is reaching a point of stability where the language doesn't need to be ever changed anymore, making it future-proof. At this point, efforts must be done towards the concretization of:
 
 1. A centralized, cloud-based, taggeable, computer-analyzable, queriable database of functions and macros (NOT libraries!)
 
