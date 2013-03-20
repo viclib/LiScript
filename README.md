@@ -9,66 +9,106 @@ In summary, it's a programming language that combines JavaScript's high level fe
 There's no installation guide yet (this will be updated soon). For now, just download LiScript, require the file on node.s or include it in a HTML script tag and call `LiScript.compile("(your source code)")`. This will return the compiled JavaScript. 
 
 #### Tutorial / Using
-Using LiScript is very easy. I'll expose the whole language with examples; if you find trouble understanding those, you could may on S-Expressions. Also, feel free to contact me!
+Using LiScript is very easy. I'll expose the whole language with examples. If you find trouble understanding those, you could may on S-Expressions. Looking at the source could be a good idea. Also, feel free to contact me!
 
-The language is very easy. It has 4 forms:
-String: `"this is a string"` -> `"this is a string"`
-Array: `["this" "is" "an" "array"]` -> `["this","is","an","array"]`
-Object: `{foo 5 bar 7}` -> `{foo:5, bar:7}`
-Function calling: `(foo 1 2 3)` -> `foo(1,2,3)`
+Notice  that this is the crude form of the language - to actually use it you'll certainly load with macros which will calibre the syntax to fill your needs. The language core is very easy. It has 4 basic forms, which map directly to their JavaScript counterparts:
+* String: `"this is a string"`
+* Array: `["this" "is" "an" "array"]`
+* Object: `{foo 5 bar 7}`
+* Function/macro calling: `(func 1 2 3)`
 
-The language comes with those built-in forms (remember you can always change those to whatever you likes best!):
-Math operators: `sum sub mul div mod` 
-Example: `(sum 1 2 3 (mul 2 2))` -> 10
+It also comes with the following functions out-of-the-box:
+* Math operators: `sum sub mul div mod`
+```
+(sum 1 2 3 (mul 2 2)) 
+Output: 10
+```
+* Boolean comparisons: `and or eq dif less greater lesseq greatereq`
+```
+(eq 2 2)
+Output: true
+```
+* Assignment: `def`
+```
+(def foo 5)
+This is the same as "foo = 5" in JavaScript.
+```
 
-Boolean comparisons: `and or eq dif less greater lesseq greatereq`
-`(eq 2 2)` -> true
+* Conditional: `if`
+```
+(def rnd (Math.random))
+(if (less rnd 0.05)
+    (console.log "You won :D")
+    (console.log "Bad luck, try again."))
 
-Function definition: `fn`
-`(fn (a b) (sum a b))` -> function(a,b){ return a+b; };
+Output: ???
+```
+    
+* Function definition: `fn`
+```
+(fn (a b) (sum a b))
+Output: function(a,b){ return a+b; };
+```
 
-Assignment: `def`
-`(def foo 5)` -> foo = 5
-
-Member access: `get set`
+* Member access: `get set`, ex: the code below outputs `4`
 ```
 (def my_obj {a 1 b 2 c 3})
 (set my_obj "b" 4)
 (console.log (get my_obj "b"))
+Output: 4
 ```
--> 4
 
-Looping: `while`
+* Loop: `while`
 ```
 (def i 0)
-(while (less i 4) (console.log i))
+(while (less i 4) 
+    (console.log i))
+Output: 0 1 2 3
 ```
--> 0 1 2 3
 
-Iteration: `iter` (works for arrays, objects and strings)
-```(iter {a 1 b 2 c 3} (console.log [key val]))```
--> ["a",1] ["b",2] ["c",3]
+* Iteration: `iter`
+```
+(iter {a 1 b 2 c 3} 
+     (console.log [key val]))
+Output: ["a",1] ["b",2] ["c",3]
+```
 
-Macro: `defmacro` (just return an array of strings representing the modified form)
-`(defmacro swap (a b) [b a])`
-`(swap "test" console.log)` -> `(console.log "test")` -> "test"
+* Macro: `defmacro`
+Macros work by modifying the code **before** it's compiled to JavaScript. and it couldn't be easier: just return an array of strings representing the new form of your code! Let's make a macro that inverts an expression:
+```
+(defmacro swap (a b) [b a])
+(swap "test" console.log)
 
-`(defmacro unless (cond T F) ["if" cond F T])`
-`(unless (eq 2 3) "2 isnt 3!" "math broke!")` -> `(if (eq 2 3) "math broke!" "2 isnt 3!")` -> "2 isnt 3!"
+This becomes `(console.log "test")` which outputs `"test"`!
+```
+Another example:
+```
+(defmacro unless (cond T F) ["if" cond F T]) 
+(def yell (fn (a) (call a "toUpperCase"))) 
+(def im_sad false)
+(unless im_sad (yell "What a great day!"))
+
+Output: "What a great day!"
+```
+
+This is an interesting fact about Lisp: clever user of macros can make the language sound just like speech. There's no syntax: just a bunch of phrases that tell your program what to do. Sometimes it's too abstracted away you don't even notice you are programming: `(make me a sandwitch in 2 hours)`, one could perfectly make this work. Lisp code from a great hacker is a piece of art. But maybe you're the type that likes terse syntax and symbols? No problems...
 
 Readers: `defreader`
-Readers are a little different: you just define enclosing symbols and a header. It's really much easier for the main uses.
+Readers are similar to macros, except they work for special forms (not parenthesis). Readers on LiScript are a little different: you just define a name and enclosing symbols. You can, then, further process it with normal macros. For example, lets define the form <a> to return the square of a:
 ```
-(defreader sqr < >) 
-(defmacro sqr (a) (mul a a)) 
+(defreader square < >) 
+(defmacro square (a) (mul a a)) 
+
 (console.log <3>)
+The form above becomes (console.log (square 3)),
+which becomes (console.log (mul 3 3)),
+which becomes (console.log 9),
+which outputs 9. 
 ```
-->
-9
 
-That was easy compared to traditional reader-macros. For more advanced cases just edit the reader! It's the 25-lines-long function called "parse_tree" on the source. Providing no lisp-to-js language provide reader macros at all as of now, it's pure win.
+That is much simpler than traditional reader macros! For more advanced cases you can just edit the parser reader: it's a 25-lines-long function on the source, so it shouldn't be hard. Given how no other lisp-to-js language implement reader macros at all, it's pure win.
 
-Well, that's it! This is the whole language. This is a crude, out-of-the-box format. It's not ideal to use it like that. For example, defining macros without some facility to concatenate array could be a little worky. Also, you could certainly improve the loops - for example, what about a "for" macro that works as an array comprehension? The point is: on LiScript you can do whatever you want, the control of the language is on your hands. Syntax-sugars can be added to make it the way you want, but the core form is plain and solid. I'll be posting interesting macros/readers in a future, and I have plans for an IDE-integrated database of macros, which will make working with LiScript much easier.
+Well, that's it! This is the whole language. Again, the out-of-the-box package must be temperated with macros. For example, you could certainly improve the loops - a "for" macro could work as CoffeeScript's array comprehension. A "let" macro might prove handy, and a facility to concatenate arrays would make defining new macros easier. The point is: LiScript allows you to do whatever you want; you control the language!
 
 #### Next steps: 
 LiScript is just a first step towards a goal: increasing programmer productivity to new levels. There is still needs some work, but when it's stable, it'll not ever need to be updated (which also makes it very future proof). After this, efforts will be done towards the concretization of:
@@ -80,5 +120,3 @@ LiScript is just a first step towards a goal: increasing programmer productivity
 3. A huge community with a good communication system. (this is the hard part ;/)
 
 If this all interests you, feel free to contact me!
-
-

@@ -99,8 +99,9 @@ LiScript = (function(){
 	var evaluate = function(text){ return eval(compile(text)); };
 	return {eval:evaluate,compile:compile,add_macro:add_macro,add_reader:add_reader,parse_tree:parse_tree,tree_to_js:tree_to_js,tree_to_string:tree_to_string};
 })();
-var src = '(defreader sqr < >) (defmacro sqr (a) (mul a a)) (console.log <3>)'; 
+var src = '(defmacro unless (cond T F) ["if" cond F T]) (def im_sad false) (def yell (fn (a) (call a "toUpperCase"))) (unless im_sad (yell "What a great day!"))'; 
 console.log(eval(LiScript.compile(src)));
+console.log(yell("aff"));
 //console.log(eval(LiScript.compile(src)));
 //var src = '[1 <3> 3]';
 //console.log(eval(LiScript.compile(src)));
