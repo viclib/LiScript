@@ -45,7 +45,7 @@ LiScript = (function(){
 		//Translate let* into JS's scope restriction idiom
 		'let*': function(bindings, body) {
 			var binds = bindings.map(function (pair) {
-				return 'var ' + pair[0] + ' = ' + pair[1] + ';';
+				return 'var ' + pair[0] + ' = ' + tree_to_js(pair[1]) + ';';
 			}).join('');
 			return '(function () {' + binds + tree_to_js(body) + '}())';
 		}
