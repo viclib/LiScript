@@ -38,8 +38,8 @@ This is the same as "foo = 5" in JavaScript.
 ```
 (def rnd (Math.random))
 (if (less rnd 0.05)
-    (console.log "You won :D")
-    (console.log "Bad luck, try again."))
+	(console.log "You won :D")
+	(console.log "Bad luck, try again."))
 Output: ?
 ```
 
@@ -61,14 +61,14 @@ Output: 4
 ```
 (def i 0)
 (while (less i 4) 
-    (console.log i))
+	(console.log i))
 Output: 0 1 2 3
 ```
 
 * Iteration: `iter`
 ```
 (iter {a 1 b 2 c 3} 
-     (console.log [key val]))
+		(console.log [key val]))
 Output: ["a",1] ["b",2] ["c",3]
 ```
 
