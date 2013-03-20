@@ -19,15 +19,19 @@ Notice  that this is the crude form of the language - to actually use it you'll 
 
 It also comes with the following functions out-of-the-box:
 * Math operators: `sum sub mul div mod`
+
 ```
 (sum 1 2 3 (mul 2 2)) 
 Output: 10
 ```
+
 * Boolean comparisons: `and or eq dif less greater lesseq greatereq`
+
 ```
 (eq 2 2)
 Output: true
 ```
+
 * Assignment: `def`
 ```
 (def foo 5)
