@@ -94,16 +94,9 @@ LiScript = (function(){
 			: translations[ast[0]] ? translations[ast[0]].apply(this,ast.slice(1))
 			: '('+tree_to_js(ast[0])+'('+ast.slice(1).map(function(a){return tree_to_js(a);}).join(',')+'))';
 	};
-	//var compile = function(text){ return tree_to_js(parse_tree("(do "+text.replace(/[\n\t]/g,"")+")",{})); };
 	var compile = function(text){ return parse_tree("("+text.replace(/[\n\t]/g,"")+")").map(function(ast){return tree_to_js(parse_tree(tree_to_string(ast)));}).join(";"); };
 	var evaluate = function(text){ return eval(compile(text)); };
 	return {eval:evaluate,compile:compile,add_macro:add_macro,add_reader:add_reader,parse_tree:parse_tree,tree_to_js:tree_to_js,tree_to_string:tree_to_string};
 })();
-var src = '(defmacro unless (cond T F) ["if" cond F T]) (def im_sad false) (def yell (fn (a) (call a "toUpperCase"))) (unless im_sad (yell "What a great day!"))'; 
-console.log(eval(LiScript.compile(src)));
-console.log(yell("aff"));
-//console.log(eval(LiScript.compile(src)));
-//var src = '[1 <3> 3]';
-//console.log(eval(LiScript.compile(src)));
 
 
