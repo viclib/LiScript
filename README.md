@@ -81,7 +81,6 @@ Macros work by modifying the code **before** it's compiled to JavaScript. and it
 (swap "test" console.log)
 This becomes `(console.log "test")` which outputs `"test"`!
 ```
-
 Another example:
 ```
 (defmacro unless (cond T F) ["if" cond F T]) 
