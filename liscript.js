@@ -14,7 +14,9 @@ LiScript = (function(){
 			return '"'+slice.call(arguments).join(' ')+'"'; 
 		},
 		obj:function(){ 
-			return '({'+slice.call(arguments).map(function(a){return a[0]+':'+tree_to_js(a[1])}).join(',')+'})'; 
+			for (var i=1, pairs=[]; i<arguments.length; i+=2)
+				pairs.push([arguments[i-1],arguments[i]]);
+			return '({'+pairs.map(function(a){return a[0]+':'+tree_to_js(a[1])}).join(',')+'})'; 
 		},
 		arr:function(){ 
 			return '(['+slice.call(arguments).map(tree_to_js).join(',')+'])'; 
@@ -31,11 +33,11 @@ LiScript = (function(){
 		iter:function(obj,code){
 			return '(function(obj_){for(var key in obj_){var val=obj_[key];'+tree_to_js(code)+'}})('+tree_to_js(obj)+')'
 		},
-		call:function(func,args){
-			return '('+tree_to_js(func)+'('+tree_to_js(args)+'))';
+		call:function(obj,method,args){
+			return '('+tree_to_js(obj)+'['+tree_to_js(method)+']('+slice.call(arguments,2).map(tree_to_js).join(',')+'))';
 		}
 	};
-	var operators = {def:'=',do:',',and:'&&',or:'||',eq:'===',diff:'!==',sum:'+',sub:'-',mul:'*',div:'/',mod:'%',less:'<',greater:'>',lesseq:'<=',greatereq:'>='};
+	var operators = {def:'=',do:',',and:'&&',or:'||',eq:'===',diff:'!==',sum:'+',sub:'-',mul:'*',div:'/',mod:'%',less:'<',greater:'>',less_eq:'<=',greater_eq:'>='};
 	for (var op in operators) {(function(op){
 		translations[op] = function(){ 
 			return '('+slice.call(arguments).map(tree_to_js).join(operators[op])+')'; 
@@ -45,8 +47,8 @@ LiScript = (function(){
 		defmacro:function(name,args,body){ 
 			return eval(tree_to_js(['LiScript.add_macro',['str',name],['fn',args,body]])), '"macro"';
 		},
-		defreader:function(open,close,head){
-			return eval(tree_to_js(['LiScript.add_reader',open,close,head])), '"reader"';
+		defreader:function(head,open,close){
+			return eval(tree_to_js(['LiScript.add_reader',['str',head],['str',open],['str',close]])), '"reader"';
 		}
 	};
 	var add_macro = function(name,fn){ console.log("adding macro ",name,fn); macros[name]=fn; };
@@ -56,7 +58,7 @@ LiScript = (function(){
 		"[":{close:"]",head:'arr'}, 
 		"{":{close:"}",head:'obj'}
 	};
-	var add_reader = function(open,close,head){ readers[open] = {close:close,head:head}; };
+	var add_reader = function(head,open,close){ readers[open] = {close:close,head:head}; console.log(readers); };
 	var parse_tree = function(str){
 		return (function parse_object(close){
 			var obj=[], symbol="", reader; 
@@ -92,8 +94,15 @@ LiScript = (function(){
 			: translations[ast[0]] ? translations[ast[0]].apply(this,ast.slice(1))
 			: '('+tree_to_js(ast[0])+'('+ast.slice(1).map(function(a){return tree_to_js(a);}).join(',')+'))';
 	};
-	var compile = function(text){ return tree_to_js(parse_tree("(do "+text.replace(/[\n\t]/g,"")+")",{})); };
-	var evaluate = function(text){ eval(compile(text)); };
+	//var compile = function(text){ return tree_to_js(parse_tree("(do "+text.replace(/[\n\t]/g,"")+")",{})); };
+	var compile = function(text){ return parse_tree("("+text.replace(/[\n\t]/g,"")+")").map(function(ast){return tree_to_js(parse_tree(tree_to_string(ast)));}).join(";"); };
+	var evaluate = function(text){ return eval(compile(text)); };
 	return {eval:evaluate,compile:compile,add_macro:add_macro,add_reader:add_reader,parse_tree:parse_tree,tree_to_js:tree_to_js,tree_to_string:tree_to_string};
 })();
+var src = '(defreader sqr < >) (defmacro sqr (a) (mul a a)) (console.log <3>)'; 
+console.log(eval(LiScript.compile(src)));
+//console.log(eval(LiScript.compile(src)));
+//var src = '[1 <3> 3]';
+//console.log(eval(LiScript.compile(src)));
+
 
