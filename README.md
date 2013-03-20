@@ -1,7 +1,7 @@
 # LiScript
 LiScript replaces JavaScript's syntax by lisp's powerful S-Expressions and macro system.
 
-Differently from other languages that compile to JavaScript, it does not try to make it a completely different language - which is the root of many common problems such as messy generated code, overheads, painful compilation and hard debugging - all of which compensate for the theoricall benefits. Instead, as very thin layer - the whole implementation being less than 100 lines - it's generated code is be **fast, readable, beautiful, zero-overheaded, workeable and easy to debug**.
+Differently from other languages that compile to JavaScript, it does not try to make it a completely different language - which is the root of many common problems such as messy generated code, overheads, painful compilation and hard debugging - all of which compensate for the theoricall benefits. Instead, as very thin layer - the whole implementation being less than 100 lines - it's generated code is **fast, readable, beautiful, zero-overheaded, workeable and easy to debug**.
 
 In summary, it's a programming language that combines JavaScript's high level features, ridiculous cross-platformness and blazing speed with lisp's awesome, powerful syntax loved by hackers all around the world. For more info on it, I recommend reading Paul Graham's "Beating the Averages": http://www.paulgraham.com/avg.html
 
