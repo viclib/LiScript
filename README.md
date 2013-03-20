@@ -1,7 +1,7 @@
 # LiScript
-LiScript replaces JavaScript's syntax by lisp's powerful, awesomeness-filled s-expressions and macro system.
+LiScript replaces JavaScript's syntax by lisp's powerful S-Expressions and macro system.
 
-Differently from other languages that compile to JavaScript, it does not try to make it a completely different language - which is the root of many common problems such as messy generated code, overheads, painful compilation and hard debugging - all of which compensate for the theoricall benefits. Instead, as very thin layer - the whole implementation being less than 100 lines - it's generated code is be **fast, readable, beautiful, zero-overheaded, workeable and easy to debug**. In fact, you could send it to a JS developer and chances are he wouldn't even notice it's not handwritten.
+Differently from other languages that compile to JavaScript, it does not try to make it a completely different language - which is the root of many common problems such as messy generated code, overheads, painful compilation and hard debugging - all of which compensate for the theoricall benefits. Instead, as very thin layer - the whole implementation being less than 100 lines - it's generated code is be **fast, readable, beautiful, zero-overheaded, workeable and easy to debug**. .
 
 In summary, it's a programming language that combines JavaScript's high level features, ridiculous cross-platformness and blazing speed with lisp's awesome, powerful syntax loved by hackers all around the world. For more info on it, I recommend reading Paul Graham's "Beating the Averages": http://www.paulgraham.com/avg.html
 
@@ -9,15 +9,14 @@ In summary, it's a programming language that combines JavaScript's high level fe
 There's no installation guide yet (this will be updated soon). For now, just download LiScript, require the file on node.s or include it in a HTML script tag and call `LiScript.compile("(your source code)")`. This will return the compiled JavaScript. 
 
 #### Tutorial / Using
-Using LiScript is very easy. I'll expose the whole language with examples. If you find trouble understanding those, you could may on S-Expressions. Looking at the source could be a good idea. Also, feel free to contact me!
-
-Notice  that this is the crude form of the language - to actually use it you'll certainly load with macros which will calibre the syntax to fill your needs. The language core is very easy. It has 4 basic forms, which map directly to their JavaScript counterparts:
+Using LiScript is very easy. I'll expose the whole language with examples. If you find trouble understanding those, you could may on S-Expressions. Looking at the source could be a good idea. Also, feel free to contact me! Notice  that this is the crude form of the language - to actually use it you'll certainly load with macros which will calibre the syntax to fill your needs. The language core is very easy. It has 4 basic forms, which map directly to their JavaScript counterparts:
 * String: `"this is a string"`
 * Array: `["this" "is" "an" "array"]`
 * Object: `{foo 5 bar 7}`
 * Function/macro calling: `(func 1 2 3)`
 
 It also comes with the following functions out-of-the-box:
+
 * Math operators: `sum sub mul div mod`
 ```
 (sum 1 2 3 (mul 2 2)) 
