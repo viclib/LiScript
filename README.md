@@ -40,9 +40,9 @@ This is the same as "foo = 5" in JavaScript.
 (if (less rnd 0.05)
     (console.log "You won :D")
     (console.log "Bad luck, try again."))
-Output: ???
+Output: ?
 ```
-    
+
 * Function definition: `fn`
 ```
 (fn (a b) (sum a b))
