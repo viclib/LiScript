@@ -102,7 +102,7 @@ which becomes (console.log (mul 3 3)),
 which becomes (console.log 9),
 which outputs 9. 
 ```
-That is much simpler than traditional reader macros! For more advanced cases you can just edit the parser reader: it's a 25-lines-long function on the source, so it shouldn't be hard. Given how no other lisp-to-js language implement reader macros at all, it's pure win.
+That is much simpler than traditional reader macros! For more advanced cases you can just edit the parser itself: it's a 25-lines-long function on the source, so it shouldn't be hard. Given how no other lisp-to-js language implement reader macros at all, it's pure win.
 
 Well, that's it! This is the whole language. Again, the out-of-the-box package must be temperated with macros. For example, you could certainly improve the loops - a "for" macro could work as CoffeeScript's array comprehension. A "let" macro might prove handy, and a facility to concatenate arrays would make defining new macros easier. The point is: LiScript allows you to do whatever you want; you control the language!
 
