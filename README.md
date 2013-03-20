@@ -50,7 +50,7 @@ Output: ???
 Output: function(a,b){ return a+b; };
 ```
 
-* Member access: `get set`, ex: the code below outputs `4`
+* Member access: `get set`
 ```
 (def my_obj {a 1 b 2 c 3})
 (set my_obj "b" 4)
