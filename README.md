@@ -87,7 +87,7 @@ Another example:
 (def yell (fn (a) (call a "toUpperCase"))) 
 (def im_sad false)
 (unless im_sad (yell "What a great day!"))
-Output: "What a great day!"
+Output: "WHAT A GREAT DAY!"
 ```
 This is an interesting fact about Lisp: clever user of macros can make the language sound just like speech. There's no syntax: just a bunch of phrases that tell your program what to do. Sometimes it's too abstracted away you don't even notice you are programming: `(make me a sandwitch in 2 hours)`, one could perfectly make this work. Lisp code from a great hacker is a piece of art. But maybe you're the type that likes terse syntax and symbols? No problems...
 
