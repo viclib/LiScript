@@ -79,16 +79,15 @@ Macros work by modifying the code **before** it's compiled to JavaScript. and it
 ```
 (defmacro swap (a b) [b a])
 (swap "test" console.log)
-
 This becomes `(console.log "test")` which outputs `"test"`!
 ```
+
 Another example:
 ```
 (defmacro unless (cond T F) ["if" cond F T]) 
 (def yell (fn (a) (call a "toUpperCase"))) 
 (def im_sad false)
 (unless im_sad (yell "What a great day!"))
-
 Output: "What a great day!"
 ```
 
@@ -99,7 +98,6 @@ Readers are similar to macros, except they work for special forms (not parenthes
 ```
 (defreader square < >) 
 (defmacro square (a) (mul a a)) 
-
 (console.log <3>)
 The form above becomes (console.log (square 3)),
 which becomes (console.log (mul 3 3)),
