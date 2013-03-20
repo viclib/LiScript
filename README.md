@@ -89,10 +89,9 @@ Another example:
 (unless im_sad (yell "What a great day!"))
 Output: "What a great day!"
 ```
-
 This is an interesting fact about Lisp: clever user of macros can make the language sound just like speech. There's no syntax: just a bunch of phrases that tell your program what to do. Sometimes it's too abstracted away you don't even notice you are programming: `(make me a sandwitch in 2 hours)`, one could perfectly make this work. Lisp code from a great hacker is a piece of art. But maybe you're the type that likes terse syntax and symbols? No problems...
 
-Readers: `defreader`
+* Readers: `defreader`
 Readers are similar to macros, except they work for special forms (not parenthesis). Readers on LiScript are a little different: you just define a name and enclosing symbols. You can, then, further process it with normal macros. For example, lets define the form <a> to return the square of a:
 ```
 (defreader square < >) 
@@ -103,7 +102,6 @@ which becomes (console.log (mul 3 3)),
 which becomes (console.log 9),
 which outputs 9. 
 ```
-
 That is much simpler than traditional reader macros! For more advanced cases you can just edit the parser reader: it's a 25-lines-long function on the source, so it shouldn't be hard. Given how no other lisp-to-js language implement reader macros at all, it's pure win.
 
 Well, that's it! This is the whole language. Again, the out-of-the-box package must be temperated with macros. For example, you could certainly improve the loops - a "for" macro could work as CoffeeScript's array comprehension. A "let" macro might prove handy, and a facility to concatenate arrays would make defining new macros easier. The point is: LiScript allows you to do whatever you want; you control the language!
