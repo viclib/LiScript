@@ -47,7 +47,10 @@ LiScript = (function(){
 			var binds = bindings.map(function (pair) {
 				return 'var ' + pair[0] + ' = ' + tree_to_js(pair[1]) + ';';
 			}).join('');
-			return '(function () {' + binds + tree_to_js(body) + '}())';
+			var compiledBody = slice.call(arguments,1).map(tree_to_js);
+			if (compiledBody.length > 1)
+				return '(function () {' + binds + compiledBody.slice(-1).join(';') + '; return ' + compiledBody[compiledBody.length-1] + '}())';
+			return '(function () {' + binds + ' return ' + compiledBody[0] + '}())';
 		}
 	};
 	var operators = {do:',',and:'&&',or:'||',eq:'===',diff:'!==',sum:'+',sub:'-',mul:'*',div:'/',mod:'%',less:'<',greater:'>',less_eq:'<=',greater_eq:'>='};
