@@ -2,7 +2,10 @@ LiScript = (function(){
 	var slice = [].slice;
 	var translations = {
 		fn:function(argList,body){ 
-			return '(function('+argList.join(',')+')'+'{return '+slice.call(arguments,1).map(tree_to_js).join(",")+'})';	
+			var compiledBody = slice.call(arguments,1).map(tree_to_js);
+			if (compiledBody.length > 1)
+				return '(function('+argList.join(',')+')'+'{ '+ compiledBody.slice(-1).join(";")+'; return '+compiledBody[compiledBody.length-1]+'; })';
+			return '(function('+argList.join(',')+')'+'{ return '+ compiledBody[0]  +'; })';
 		},
 		macro:function(argList,body){
 			return '{type:"macro",fn:'+tree_to_js(["fn"].concat(argList,body))+'}';
@@ -35,9 +38,19 @@ LiScript = (function(){
 		},
 		call:function(obj,method,args){
 			return '('+tree_to_js(obj)+'['+tree_to_js(method)+']('+slice.call(arguments,2).map(tree_to_js).join(',')+'))';
+		},
+		def: function(sym,val){
+			return 'var ' + sym + ' = ' + tree_to_js(val);
+		},
+		//Translate let* into JS's scope restriction idiom
+		'let*': function(bindings, body) {
+			var binds = bindings.map(function (pair) {
+				return 'var ' + pair[0] + ' = ' + pair[1] + ';';
+			}).join('');
+			return '(function () {' + binds + tree_to_js(body) + '}())';
 		}
 	};
-	var operators = {def:'=',do:',',and:'&&',or:'||',eq:'===',diff:'!==',sum:'+',sub:'-',mul:'*',div:'/',mod:'%',less:'<',greater:'>',less_eq:'<=',greater_eq:'>='};
+	var operators = {do:',',and:'&&',or:'||',eq:'===',diff:'!==',sum:'+',sub:'-',mul:'*',div:'/',mod:'%',less:'<',greater:'>',less_eq:'<=',greater_eq:'>='};
 	for (var op in operators) {(function(op){
 		translations[op] = function(){ 
 			return '('+slice.call(arguments).map(tree_to_js).join(operators[op])+')'; 
@@ -51,7 +64,7 @@ LiScript = (function(){
 			return eval(tree_to_js(['LiScript.add_reader',['str',head],['str',open],['str',close]])), '"reader"';
 		}
 	};
-	var add_macro = function(name,fn){ console.log("adding macro ",name,fn); macros[name]=fn; };
+	var add_macro = function(name,fn){ macros[name]=fn; };
 	var readers = {
 		'(':{close:')'},
 		'"':{close:'"',head:'str'},
@@ -99,4 +112,5 @@ LiScript = (function(){
 	return {eval:evaluate,compile:compile,add_macro:add_macro,add_reader:add_reader,parse_tree:parse_tree,tree_to_js:tree_to_js,tree_to_string:tree_to_string};
 })();
 
-
+//export as a module
+if (typeof module !== 'undefined' && module.exports) module.exports = LiScript;
