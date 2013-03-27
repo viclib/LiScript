@@ -4,9 +4,6 @@ LiScript = (function(){
 		fn:function(argList,body){ 
 			return '(function('+argList.join(',')+')'+'{return '+slice.call(arguments,1).map(tree_to_js).join(",")+'})';	
 		},
-		macro:function(argList,body){
-			return '{type:"macro",fn:'+tree_to_js(["fn"].concat(argList,body))+'}';
-		},
 		if:function(cond,case_true,case_false){
 			return '('+tree_to_js(cond)+'?'+tree_to_js(case_true)+':'+tree_to_js(case_false)+')';
 		},
@@ -98,5 +95,3 @@ LiScript = (function(){
 	var evaluate = function(text){ return eval(compile(text)); };
 	return {eval:evaluate,compile:compile,add_macro:add_macro,add_reader:add_reader,parse_tree:parse_tree,tree_to_js:tree_to_js,tree_to_string:tree_to_string};
 })();
-
-
