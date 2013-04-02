@@ -7,6 +7,7 @@ In summary, it's a programming language that combines JavaScript's high level fe
 
 #### Installation
 There's no installation guide yet (this will be updated soon). For now, just download LiScript, require the file on node.s or include it in a HTML script tag and call `LiScript.compile("(your source code)")`. This will return the compiled JavaScript. 
+**You can also try it online: http://evanhahn.github.com/Try-LiScript/**
 
 #### Tutorial / Using
 Using LiScript is very easy. I'll expose the whole language with examples. If you find trouble understanding those, you could may on S-Expressions. Looking at the source could be a good idea. Also, feel free to contact me! Notice  that this is the crude form of the language - to actually use it you'll certainly load with macros which will calibre the syntax to fill your needs. The language core is very easy. It has 4 basic forms, which map directly to their JavaScript counterparts:
