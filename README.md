@@ -7,6 +7,7 @@ In summary, it's a programming language that combines JavaScript's high level fe
 
 #### Installation
 There's no installation guide yet (this will be updated soon). For now, just download LiScript, require the file on node.s or include it in a HTML script tag and call `LiScript.compile("(your source code)")`. This will return the compiled JavaScript. 
+
 **You can also try it online: http://evanhahn.github.com/Try-LiScript/**
 
 #### Tutorial / Using
