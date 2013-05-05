@@ -42,10 +42,10 @@ LiScript = (function(){
 	})(op)};
 	var macros = {
 		defmacro:function(name,args,body){ 
-			return eval(tree_to_js(['LiScript.add_macro',['str',name],['fn',args,body]])), '"macro"';
+			return eval(tree_to_js(['add_macro',['str',name],['fn',args,body]])), '"macro"';
 		},
 		defreader:function(head,open,close){
-			return eval(tree_to_js(['LiScript.add_reader',['str',head],['str',open],['str',close]])), '"reader"';
+			return eval(tree_to_js(['add_reader',['str',head],['str',open],['str',close]])), '"reader"';
 		}
 	};
 	var add_macro = function(name,fn){ console.log("adding macro ",name,fn); macros[name]=fn; };
