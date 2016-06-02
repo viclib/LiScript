@@ -1,4 +1,4 @@
-LiScript = (function(){
+liscript = (function(){
   var slice = [].slice;
   var translations = {
     fn:function(argList,body){
@@ -95,3 +95,5 @@ LiScript = (function(){
   var evaluate = function(text){ return eval(compile(text)); };
   return {eval:evaluate,compile:compile,add_macro:add_macro,add_reader:add_reader,parse_tree:parse_tree,tree_to_js:tree_to_js,tree_to_string:tree_to_string};
 })();
+
+module.exports = liscript
