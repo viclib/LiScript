@@ -20,25 +20,25 @@ Using LiScript is very easy. I'll expose the whole language with examples. If yo
 It also comes with the following functions out-of-the-box:
 
 * Math operators: `sum sub mul div mod`
-```
+```lisp
 (sum 1 2 3 (mul 2 2)) 
 Output: 10
 ```
 
 * Boolean comparisons: `and or eq dif less greater lesseq greatereq`
-```
+```lisp
 (eq 2 2)
 Output: true
 ```
 
 * Assignment: `def`
-```
+```lisp
 (def foo 5)
 This is the same as "foo = 5" in JavaScript.
 ```
 
 * Conditional: `if`
-```
+```lisp
 (def rnd (Math.random))
 (if (less rnd 0.05)
 	(console.log "You won :D")
@@ -47,13 +47,13 @@ Output: ?
 ```
 
 * Function definition: `fn`
-```
+```lisp
 (fn (a b) (sum a b))
 Output: function(a,b){ return a+b; };
 ```
 
 * Member access: `get set`
-```
+```lisp
 (def my_obj {a 1 b 2 c 3})
 (set my_obj "b" 4)
 (console.log (get my_obj "b"))
@@ -61,7 +61,7 @@ Output: 4
 ```
 
 * Loop: `while`
-```
+```lisp
 (def i 0)
 (while (less i 4) 
 	(console.log i)
@@ -70,7 +70,7 @@ Output: 0 1 2 3
 ```
 
 * Iteration: `iter`
-```
+```lisp
 (iter {a 1 b 2 c 3} 
 		(console.log [key val]))
 Output: ["a",1] ["b",2] ["c",3]
@@ -78,13 +78,13 @@ Output: ["a",1] ["b",2] ["c",3]
 
 * Macro: `defmacro`
 Macros work by modifying the code **before** it's compiled to JavaScript. and it couldn't be easier: just return an array of strings representing the new form of your code! Let's make a macro that inverts an expression:
-```
+```lisp
 (defmacro swap (a b) [b a])
 (swap "test" console.log)
 This becomes `(console.log "test")` which outputs `"test"`!
 ```
 Another example:
-```
+```lisp
 (defmacro unless (cond T F) ["if" cond F T]) 
 (def yell (fn (a) (call a "toUpperCase"))) 
 (def im_sad false)
@@ -95,7 +95,7 @@ This is an interesting fact about Lisp: clever user of macros can make the langu
 
 * Readers: `defreader`
 Readers are similar to macros, except they work for special forms (not parenthesis). Readers on LiScript are a little different: you just define a name and enclosing symbols. You can, then, further process it with normal macros. For example, lets define the form < a > to return the square of a:
-```
+```lisp
 (defreader square < >) 
 (defmacro square (a) (mul a a)) 
 (console.log <3>)
